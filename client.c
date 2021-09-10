@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 17:53:31 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/10 18:18:16 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/10 18:31:02 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,12 @@ etc....
 
 */
 
+void	send_error(char *message)
+{
+	printf("ERROR\n%s\n", message);
+	exit (0);
+}
+
 void	send_signals(int pid, char *message)
 {
 	int	i;
@@ -57,11 +63,13 @@ void	send_signals(int pid, char *message)
 		{
 			if (message[i] & 0x80 >> shift)
 			{
-				kill(pid, SIGUSR1);
+				if (kill(pid, SIGUSR1) == -1)
+					send_error("Wrong pid");
 			}
 			else
 			{
-				kill(pid, SIGUSR2);
+				if (kill(pid, SIGUSR2) == -1)
+					send_error("Wrong pid");
 			}
 			usleep(80);
 		}
@@ -75,16 +83,10 @@ int	main(int argc, char **argv)
 	int		pid;
 
 	if (argc != 3)
-	{
-		printf("Invalid arguments\n");
-		exit (0);
-	}
+		send_error("Invalid arguments");
 	pid = atoi(argv[1]);
 	if (pid > 2147483647 || pid <= 0)
-	{
-		printf("ERROR\nInvalid form of PID\n");
-		exit (0);
-	}
+		send_error("Invalid form of PID");
 	printf("PID = %d\n", pid);
 	send_signals(pid, argv[2]);
 	return (0);
