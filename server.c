@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 17:53:52 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/09 17:57:20 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/10 17:47:16 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,10 @@ void	character_received(int signal)
 	static char	car = 0xFF;
 	static int	shift = 0;
 
-	if (g_received == 0)
-	{
-		printf("SIGNAL RECEIVED\n");
-		g_received++;
-	}
 	if (signal == SIGUSR1 && shift < 8)
-	{
 		car = car | 0x80 >> shift;
-	}
 	else if (signal == SIGUSR2 && shift < 8)
-	{
 		car = car ^ 0x80 >> shift;
-	}
 	shift++;
 	if (shift == 8)
 	{
