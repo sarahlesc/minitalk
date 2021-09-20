@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 17:53:52 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/10 17:47:16 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/20 17:11:36 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,16 @@ void	character_received(int signal)
 {
 	static char	car = 0xFF;
 	static int	shift = 0;
+	static int	i = 0;
+	static char	*str = NULL;
 
+	i = 0;
+	if (str == NULL)
+	{
+		str = malloc(sizeof(char) * 1);
+		if (str == NULL)
+			exit (0);
+	}
 	if (signal == SIGUSR1 && shift < 8)
 		car = car | 0x80 >> shift;
 	else if (signal == SIGUSR2 && shift < 8)
@@ -47,9 +56,18 @@ void	character_received(int signal)
 	shift++;
 	if (shift == 8)
 	{
-		write(1, &car, 1);
+		i++;
+		str = ft_strjoin(str, car);
+//		write(1, &car, 1);
 		shift = 0;
 		car = 0xFF;
+		if (car == '\0')
+		{
+			write(1, &str, i);
+			free (str);
+			str = NULL;
+			i = 0;
+		}
 	}
 }
 
