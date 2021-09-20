@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 17:53:52 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/10 17:47:16 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/16 16:18:45 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "libft/include/libft.h"
 
 /*
 
@@ -39,6 +40,7 @@ void	character_received(int signal)
 {
 	static char	car = 0xFF;
 	static int	shift = 0;
+	static t_double_list *str = NULL;
 
 	if (signal == SIGUSR1 && shift < 8)
 		car = car | 0x80 >> shift;
@@ -47,9 +49,32 @@ void	character_received(int signal)
 	shift++;
 	if (shift == 8)
 	{
-		write(1, &car, 1);
-		shift = 0;
-		car = 0xFF;
+		if (car != '\0')
+			ft_double_lstadd_back(&str, ft_double_lstnew(car));
+//		printf("str->content = %c\n", str->content);
+		if (car == '\0')
+		{
+			ft_double_lstfirst(str);
+//			write(1, &str->content, 1);
+			printf("\n");
+	//		exit (0);
+			while (str->next != NULL)
+			{
+				printf("ici ?\n");
+				write(1, &str->content, 1);
+				str = str->next;
+			}
+			write(1, &str->content, 1);
+//			printf("ici5\n");
+			ft_double_lstclear(&str, 0);
+//			printf("ici6\n");
+			str = NULL;
+		}
+		else
+		{
+			shift = 0;
+			car = 0xFF;
+		}
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 17:53:31 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/10 18:31:02 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/16 15:10:54 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "libft/include/libft.h"
 
 /*
 
@@ -76,6 +77,20 @@ void	send_signals(int pid, char *message)
 		shift = -1;
 		i++;
 	}
+	while (++shift < 8)
+	{
+		if ('\0' & 0x80 >> shift)
+		{
+			if (kill(pid, SIGUSR1) == -1)
+				send_error("Wrong pid");
+		}
+		else
+		{
+			if (kill(pid, SIGUSR2) == -1)
+				send_error("Wrong pid");
+		}
+		usleep(80);
+	}
 }
 
 int	main(int argc, char **argv)
@@ -84,7 +99,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 3)
 		send_error("Invalid arguments");
-	pid = atoi(argv[1]);
+	pid = ft_atoi(argv[1]);
 	if (pid > 2147483647 || pid <= 0)
 		send_error("Invalid form of PID");
 	printf("PID = %d\n", pid);
