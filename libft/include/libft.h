@@ -6,7 +6,11 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 13:18:42 by slescure          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/09/20 16:37:48 by slescure         ###   ########.fr       */
+=======
+/*   Updated: 2021/06/02 13:19:12 by slescure         ###   ########.fr       */
+>>>>>>> ad5d3112875f340af71954649c6d76bcf5f12dda
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +78,10 @@ void			*ft_memmove(void *dst, const void *src, size_t len);
 void			*ft_memset(void *b, int c, size_t len);
 void			ft_bzero(void *s, size_t n);
 void			*ft_calloc(size_t count, size_t size);
+<<<<<<< HEAD
 void 			*ft_realloc(void *ptr, size_t size);
+=======
+>>>>>>> ad5d3112875f340af71954649c6d76bcf5f12dda
 
 /*
  ** Types

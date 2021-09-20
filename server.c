@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 17:53:52 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/20 17:11:36 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/20 18:18:34 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
+#include "libft/include/libft.h"
 
 /*
 

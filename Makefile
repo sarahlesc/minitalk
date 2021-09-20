@@ -6,7 +6,7 @@
 #    By: slescure <slescure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 17:58:02 by slescure          #+#    #+#              #
-#    Updated: 2021/09/20 17:28:23 by slescure         ###   ########.fr        #
+#    Updated: 2021/09/20 18:18:35 by slescure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,8 @@ RESET		:= $(shell tput -Txterm sgr0)
 all:
 	$(CLIENT) $(SERVER)
 
-$(NAME): all
+$(NAME): @ $(MAKE) bonus $(LIBFT_DIR)
+	all
 
 $(SERVER): $(LIBFT)
 	@ $(CC) $(CFLAGS) $(SRC_SERVER) -o $(SERVER)
@@ -58,6 +59,7 @@ clean:
 
 fclean: clean
 	@ $(RM) $(CLIENT) $(SERVER)
+	@ $(MAKE) fclean -C $(LIBFT_DIR)
 	@echo "$(RED)Deleting executables...$(RESET)"
 
 san :
