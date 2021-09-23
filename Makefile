@@ -6,7 +6,7 @@
 #    By: slescure <slescure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 17:58:02 by slescure          #+#    #+#              #
-#    Updated: 2021/09/23 11:00:43 by slescure         ###   ########.fr        #
+#    Updated: 2021/09/23 18:49:55 by slescure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME =
 CLIENT =	client
 SERVER =	server
 
-SRC_CLIENT = client_bis.c
-SRC_SERVER = server_bis.c
+SRC_CLIENT = client.c
+SRC_SERVER = server.c
 
 LIBFT		=	./libft/libft.a
 LIBFT_DIR	=	./libft
