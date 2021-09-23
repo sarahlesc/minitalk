@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/09 17:53:31 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/16 15:10:54 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/23 11:00:46 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	send_signals(int pid, char *message)
 				if (kill(pid, SIGUSR2) == -1)
 					send_error("Wrong pid");
 			}
-			usleep(80);
+			usleep(300);
 		}
 		shift = -1;
 		i++;
@@ -89,20 +89,29 @@ void	send_signals(int pid, char *message)
 			if (kill(pid, SIGUSR2) == -1)
 				send_error("Wrong pid");
 		}
-		usleep(80);
+		usleep(300);
 	}
 }
 
 int	main(int argc, char **argv)
 {
 	int		pid;
+	struct sigaction	sa_signals;
 
 	if (argc != 3)
 		send_error("Invalid arguments");
-	pid = ft_atoi(argv[1]);
-	if (pid > 2147483647 || pid <= 0)
-		send_error("Invalid form of PID");
-	printf("PID = %d\n", pid);
-	send_signals(pid, argv[2]);
+	else
+	{
+		pid = ft_atoi(argv[1]);
+		if (!pid)
+		{
+			printf("ERROR: invalid PID \n");
+			return(EXIT_FAILURE);
+		}
+		sa_signals.sa_flags = SA_SIGINFO;
+		sa_signals.sa_sigaction = sig_handler;
+		sigaction(SIGUSR1, &sa_signals, NULL);
+		sigaction(SIGUSR2, &sa_signals, NULL);
+		send_signals(pid, argv[2]);
 	return (0);
 }

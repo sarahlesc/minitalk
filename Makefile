@@ -6,7 +6,7 @@
 #    By: slescure <slescure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 17:58:02 by slescure          #+#    #+#              #
-#    Updated: 2021/09/20 18:18:35 by slescure         ###   ########.fr        #
+#    Updated: 2021/09/23 11:00:43 by slescure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME =
 CLIENT =	client
 SERVER =	server
 
-SRC_CLIENT = client.c
-SRC_SERVER = server.c
+SRC_CLIENT = client_bis.c
+SRC_SERVER = server_bis.c
 
 LIBFT		=	./libft/libft.a
 LIBFT_DIR	=	./libft
@@ -25,6 +25,12 @@ CFLAGS = -Wall -Wextra -Werror
 SAN = -g3 -fsanitize=address
 RM = rm -rf
 INC		=	-I. -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include
+
+ifneq ("$(wildcard $(/libft/libft.a))","")
+LIBFT_EXISTS = 1
+else
+LIBFT_EXISTS = 0
+endif
 
 BLACK		:= $(shell tput -Txterm setaf 0)
 RED		:= $(shell tput -Txterm setaf 1)
@@ -36,18 +42,16 @@ BLUE		:= $(shell tput -Txterm setaf 6)
 WHITE		:= $(shell tput -Txterm setaf 7)
 RESET		:= $(shell tput -Txterm sgr0)
 
-all:
-	$(CLIENT) $(SERVER)
+all: $(CLIENT) $(SERVER)
 
-$(NAME): @ $(MAKE) bonus $(LIBFT_DIR)
-	all
+$(NAME): all
 
 $(SERVER): $(LIBFT)
-	@ $(CC) $(CFLAGS) $(SRC_SERVER) -o $(SERVER)
+	@ $(CC) $(CFLAGS) $(SRC_SERVER) $(LIBFT) $(INC) -o $(SERVER)
 	@echo "$(GREEN)server ready$(RESET)"
 
 $(CLIENT): $(LIBFT)
-	@ $(CC) $(CFLAGS) $(SRC_CLIENT) -o $(CLIENT)
+	@ $(CC) $(CFLAGS) $(SRC_CLIENT) $(LIBFT) $(INC) -o $(CLIENT)
 	@echo "$(BLUE)Compilation...$(RESET)"
 	@echo "$(GREEN)client ready$(RESET)"
 
@@ -63,7 +67,8 @@ fclean: clean
 	@echo "$(RED)Deleting executables...$(RESET)"
 
 san :
-	@(gcc -o $(NAME) -I include $(SRCS) libft/libft.a $(CFLAGS) $(SAN))
+	@ $(CC) $(CFLAGS) $(SAN) $(SRC_CLIENT) $(LIBFT) $(INC) -o $(CLIENT)
+	@ $(CC) $(CFLAGS) $(SAN) $(SRC_SERVER) $(LIBFT) $(INC) -o $(SERVER)
 
 re: fclean all
 
