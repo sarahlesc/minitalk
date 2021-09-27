@@ -6,7 +6,7 @@
 #    By: slescure <slescure@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/09/09 17:58:02 by slescure          #+#    #+#              #
-#    Updated: 2021/09/23 18:49:55 by slescure         ###   ########.fr        #
+#    Updated: 2021/09/26 23:14:18 by slescure         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,12 +26,6 @@ SAN = -g3 -fsanitize=address
 RM = rm -rf
 INC		=	-I. -I$(LIBFT_DIR) -I$(LIBFT_DIR)/include
 
-ifneq ("$(wildcard $(/libft/libft.a))","")
-LIBFT_EXISTS = 1
-else
-LIBFT_EXISTS = 0
-endif
-
 BLACK		:= $(shell tput -Txterm setaf 0)
 RED		:= $(shell tput -Txterm setaf 1)
 GREEN		:= $(shell tput -Txterm setaf 2)
@@ -46,6 +40,11 @@ all: $(CLIENT) $(SERVER)
 
 $(NAME): all
 
+$(LIBFT):
+	@echo "$(BLUE)Compilation of LIBFT...$(RESET)"
+	@ $(MAKE) -C $(LIBFT_DIR)
+	@echo "$(GREEN)LIBFT ready$(RESET)"
+
 $(SERVER): $(LIBFT)
 	@ $(CC) $(CFLAGS) $(SRC_SERVER) $(LIBFT) $(INC) -o $(SERVER)
 	@echo "$(GREEN)server ready$(RESET)"
@@ -54,6 +53,7 @@ $(CLIENT): $(LIBFT)
 	@ $(CC) $(CFLAGS) $(SRC_CLIENT) $(LIBFT) $(INC) -o $(CLIENT)
 	@echo "$(BLUE)Compilation...$(RESET)"
 	@echo "$(GREEN)client ready$(RESET)"
+
 
 clean:
 	@ $(RM) $(SERVER) $(CLIENT)

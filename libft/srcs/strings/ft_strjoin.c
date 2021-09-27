@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/02 13:48:56 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/21 20:04:23 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/27 11:11:11 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		j++;
 	}
 	rslt[i] = '\0';
-//	free (&s1);
 	return (rslt);
 }
