@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 18:40:04 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/27 22:52:02 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/28 09:21:20 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	finish_transmission(int pid)
 	while (i++ < 8)
 	{
 		kill(pid, SIGUSR1);
-		usleep(50);
+		usleep(30);
 	}
 }
 
@@ -53,7 +53,7 @@ droite et remplace par 0 sur son ancienne place
 puis on compare notre caractère sous forme binaire avec
 10000000 (0x80) avec (&) pour repérer les 1
 Si le résultat avec (&) du caractère en binaire et de 0x80 donne 1, alors
-on envoie le signal à SIGUSR1, si c'est un 0, on envoie SIGUSR2
+on envoie le signal à SIGUSR2, si c'est un 0, on envoie SIGUSR1
 Puis on >> 0x80 afin de bouger de 10000000 avec 01000000
 Exemple :
 01100001
@@ -84,7 +84,7 @@ void	send_signal(char *str, int server_pid)
 				if (kill(server_pid, SIGUSR1) == -1)
 					exit(1);
 			}
-			usleep(50);
+			usleep(35);
 		}
 		i++;
 	}

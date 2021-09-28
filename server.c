@@ -6,7 +6,7 @@
 /*   By: slescure <slescure@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/23 18:56:27 by slescure          #+#    #+#             */
-/*   Updated: 2021/09/27 22:49:09 by slescure         ###   ########.fr       */
+/*   Updated: 2021/09/28 09:21:31 by slescure         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 char	*print_message(char *message)
 {
+	if (message == NULL)
+		return (NULL);
 	ft_putstr_fd(message, 1);
 	free(message);
 	ft_putstr_fd("\n", 1);
@@ -65,7 +67,7 @@ char	*ft_add_chara(char *str, char c)
 CONVERTIR LES SIGNAUX (BINAIRES) EN CARACTÈRES
 On utilise OR (|) et XOR (^) pour réunir tous les 1 et 0 et ainsi
 reconstituer le nombre.
-En fonction du signal reçu (SIGUSR1 = 1, SIGUSR2 = 0), on compare
+En fonction du signal reçu (SIGUSR1 = 0, SIGUSR2 = 1), on compare
 notre base 11111111 avec 10000000 :
 - si c'est un 0, on utilise (^)
 - si c'est un 1, on utilise (|)
